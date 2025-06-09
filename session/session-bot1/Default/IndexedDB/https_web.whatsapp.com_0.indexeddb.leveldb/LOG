@@ -1,0 +1,18 @@
+2025/05/29-13:36:29.752 38d8 Reusing MANIFEST C:\Users\HP\Desktop\programacion\arduino\bot-wastapp-water\session\session-bot1\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2025/05/29-13:36:29.756 38d8 Recovering log #852
+2025/05/29-13:36:29.970 38d8 Reusing old log C:\Users\HP\Desktop\programacion\arduino\bot-wastapp-water\session\session-bot1\Default\IndexedDB\https_web.whatsapp.com_0.indexeddb.leveldb/000852.log 
+2025/05/29-13:36:33.571 5b98 Manual compaction at level-0 from '\x00&\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00'\x00\x00\x00' @ 0 : 0; will stop at (end)
+2025/05/29-13:36:59.025 f0 Compacting 1@1 + 5@2 files
+2025/05/29-13:36:59.416 f0 Generated table #866@1: 60993 keys, 2199210 bytes
+2025/05/29-13:37:00.117 f0 Generated table #867@1: 103516 keys, 2253078 bytes
+2025/05/29-13:37:00.699 f0 Generated table #868@1: 103130 keys, 2253829 bytes
+2025/05/29-13:37:01.045 f0 Generated table #869@1: 103684 keys, 2252602 bytes
+2025/05/29-13:37:01.214 f0 Generated table #870@1: 51557 keys, 1125568 bytes
+2025/05/29-13:37:01.214 f0 Compacted 1@1 + 5@2 files => 10084287 bytes
+2025/05/29-13:37:01.216 f0 compacted to: files[ 0 0 16 0 0 0 0 ]
+2025/05/29-13:37:01.218 f0 Delete type=2 #818
+2025/05/29-13:37:01.218 f0 Delete type=2 #819
+2025/05/29-13:37:01.218 f0 Delete type=2 #820
+2025/05/29-13:37:01.218 f0 Delete type=2 #821
+2025/05/29-13:37:01.218 f0 Delete type=2 #822
+2025/05/29-13:37:01.218 f0 Delete type=2 #855
