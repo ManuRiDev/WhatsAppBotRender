@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "node 4.js"
+       "start": "node bot4.js"
   },
   "keywords": [],
   "author": "",
