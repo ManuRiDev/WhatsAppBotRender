@@ -96,8 +96,6 @@ async function iniciarBot() {
 
       const mensaje = messages[0];        
 
-      //console.log("📩 Mensaje nuevo de:", mensaje); 
-
       if(mensaje.key.participant === undefined)return;
       if (!mensaje.message) return;
       //if (mensaje.key.fromMe) return;
@@ -127,7 +125,6 @@ async function iniciarBot() {
       const sendJson = { accion: parseInt(comandos[partes[0]])}
       //const accion = comandos[texto].toString(); 
       const accion = comandos[partes[0]];       
-      //console.log("📩 Mensaje nuevo de:", pushName,";" , participant, "→", texto," // ", accion, " -- ",sendJson); 
       
       if (mensaje.key.fromMe) return;
 
@@ -163,10 +160,7 @@ async function iniciarBot() {
       }  
  
     }
-    catch (error) {
-      //console.log(type);
-      //console.log("---------")
-      //console.error("❌ Error procesando mensaje:", error);
+    catch (error) { 
     }
   });
 
