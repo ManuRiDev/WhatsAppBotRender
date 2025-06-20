@@ -13,7 +13,33 @@ const mqttClient = mqtt.connect(MQTT_BROKER);
 // Número destino (reemplazalo con el que quieras responder)
 const numeroDestino = "50361742544@s.whatsapp.net"; // <-- Tu número o de prueba con formato internacional + @c.us
 const grupoDestino = '120363401584074265@g.us'; // <-- Tu número o de prueba con formato internacional + @c.us
-                      
+
+// Lista de usuarios autorizados
+const permitidos = [
+  "50378766494",  //vidal
+  "50361742544"   //yo 
+];
+
+// Lista de usuarios autorizados
+const PartiPermitidos = [
+  "23274494902319"// yo 
+];
+
+// Lista de usuarios autorizados
+const NamesPermitidos = [ 
+  "Manu",   //yo
+  "Orellana"   //ma
+];
+
+const IDPermitidos = [ 
+  "120363401584074265"  
+];
+
+// Comandos válidos que el bot reconocerá y enviará al NodeMCU vía MQTT
+const comandos = {
+  "on": 1,
+  "off": 0
+};
 
 mqttClient.on('connect', () => {
   console.log("✅ Conectado a MQTT broker");
@@ -61,33 +87,6 @@ async function iniciarBot() {
   });
 
   sock.ev.on('creds.update', saveCreds);
-
-  // Lista de usuarios autorizados
-  const permitidos = [
-    "50378766494",  //vidal
-    "50361742544"   //yo 
-  ];
-
-  // Lista de usuarios autorizados
-  const PartiPermitidos = [
-    "23274494902319"// yo 
-  ];
-
-  // Lista de usuarios autorizados
-  const NamesPermitidos = [ 
-    "Manu",   //yo
-    "Orellana"   //ma
-  ];
-
-  const IDPermitidos = [ 
-    "120363401584074265"  
-  ];
-  
-  // Comandos válidos que el bot reconocerá y enviará al NodeMCU vía MQTT
-  const comandos = {
-    "on": 1,
-    "off": 0
-  };
 
   // ✅ Escuchar mensajes nuevos
   sock.ev.on('messages.upsert', async ({ messages, type }) => {
