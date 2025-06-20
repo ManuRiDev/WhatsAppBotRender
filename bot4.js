@@ -29,6 +29,29 @@ mqttClient.on('error', (err) => {
   console.error("❌ Error MQTT:", err);
 });
 
+// Cuando llega un mensaje desde MQTT
+mqttClient.on("message", (topic, message) => {
+  console.log("New messae");
+  const dato = message.toString();
+  const ndato = parseInt(message);
+  console.log(`💧 MQTT > ${topic}: ${dato}`);
+
+  try {     
+    if(ndato < 0){ 
+      sock.sendMessage(grupoDestino,{ text: `🌊 Encendido de forma permanente`} ); 
+    }else if(ndato > 0){        
+      const minu = parseInt(ndato/60);
+      const segun = parseInt(ndato%60);
+      sock.sendMessage(grupoDestino,{ text: `🌊 Encendido por ${minu}:minutos y ${segun}:segundos`} ); 
+    }else{
+      sock.sendMessage(grupoDestino,{ text: `🌊 Apagado`} ); 
+    }
+  } catch (error) {    
+    console.log("grupo no encontrado"); 
+    console.log(error); 
+  }
+});
+
 async function iniciarBot() {
   const { state, saveCreds } = await useMultiFileAuthState('./auth_info_baileys');
 
@@ -38,29 +61,6 @@ async function iniciarBot() {
   });
 
   sock.ev.on('creds.update', saveCreds);
-
-  // Cuando llega un mensaje desde MQTT
-    mqttClient.on("message", (topic, message) => {
-    console.log("New messae");
-    const dato = message.toString();
-    const ndato = parseInt(message);
-    console.log(`💧 MQTT > ${topic}: ${dato}`);
- 
-    try {     
-      if(ndato < 0){ 
-        sock.sendMessage(grupoDestino,{ text: `🌊 Encendido de forma permanente`} ); 
-      }else if(ndato > 0){        
-        const minu = parseInt(ndato/60);
-        const segun = parseInt(ndato%60);
-        sock.sendMessage(grupoDestino,{ text: `🌊 Encendido por ${minu}:minutos y ${segun}:segundos`} ); 
-      }else{
-        sock.sendMessage(grupoDestino,{ text: `🌊 Apagado`} ); 
-      }
-    } catch (error) {    
-      console.log("grupo no encontrado"); 
-      console.log(error); 
-    }
-  });
 
   // Lista de usuarios autorizados
   const permitidos = [
@@ -97,8 +97,7 @@ async function iniciarBot() {
       const mensaje = messages[0];        
 
       if(mensaje.key.participant === undefined)return;
-      if (!mensaje.message) return;
-      //if (mensaje.key.fromMe) return;
+      if (!mensaje.message) return; 
 
       const pushName = mensaje.pushName;
       let jidReal = mensaje.key.remoteJid;
@@ -122,29 +121,25 @@ async function iniciarBot() {
       //dividimos el texto un json si es posible      
       const partes = texto.split(','); 
 
-      const sendJson = { accion: parseInt(comandos[partes[0]])}
-      //const accion = comandos[texto].toString(); 
+      const sendJson = { accion: parseInt(comandos[partes[0]])} 
       const accion = comandos[partes[0]];       
       
       if (mensaje.key.fromMe) return;
 
       switch (partes[0]) {
         case 'on':   
-          if (partes[1] && parseInt(partes[1])>0) {
-            //sendJson.tiempo = parseInt(partes[1]) * 60;
+          if (partes[1] && parseInt(partes[1])>0) { 
             sendJson.tiempo = parseInt(partes[1]) * 60;   
             await sock.sendMessage(mensaje.key.remoteJid, { text: 'Encendiendo.... '+'Durante ' + partes[1] + ' minutos' });
           }else{            
             sendJson.tiempo = -1; 
             await sock.sendMessage(mensaje.key.remoteJid, { text: 'Encendiendo.... de forma infinita'});
           }                 
-          mqttClient.publish(MQTT_TOPIC, JSON.stringify(sendJson));
-          //mqttClient.publish(MQTT_TOPIC, accion.toString());
+          mqttClient.publish(MQTT_TOPIC, JSON.stringify(sendJson)); 
           console.log("📩 Mensaje nuevo de:", pushName,";" , participant, "→", texto," // ", accion, " -- ",sendJson); 
           break;
         case 'off':
-          await sock.sendMessage(mensaje.key.remoteJid, { text: 'Apagando....' });
-          //mqttClient.publish(MQTT_TOPIC, accion.toString()); 
+          await sock.sendMessage(mensaje.key.remoteJid, { text: 'Apagando....' }); 
           sendJson.tiempo = 0;
           mqttClient.publish(MQTT_TOPIC, JSON.stringify(sendJson));   
           console.log("📩 Mensaje nuevo de:", pushName,";" , participant, "→", texto," // ", accion, " -- ",sendJson); 
